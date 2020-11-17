@@ -12,7 +12,7 @@ using namespace cv;
 using namespace std;
 
 // Constructor
-ThetaConversion::ThetaConversion(int _w, int _h)
+ThetaConversion::ThetaConversion(int _w, int _h) : shift(0)
 {
     cols = _w;
     rows = _h;

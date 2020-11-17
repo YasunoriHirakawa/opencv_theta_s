@@ -32,20 +32,20 @@ int main(int argc, const char * argv[]) {
         return -1;
     }
     // width
-    int width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    int width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     // height
-    int height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    int height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     // number of frames
-    int count = cap.get(CV_CAP_PROP_FRAME_COUNT);
+    int count = cap.get(cv::CAP_PROP_FRAME_COUNT);
     // fps
-    double fps = cap.get(CV_CAP_PROP_FPS);
+    double fps = cap.get(cv::CAP_PROP_FPS);
     
     cout << "size = " << width << "x" << height << endl;
     cout << "frame count = " << count << endl;
     cout << "fps = " << fps << endl;
     
     cv::Size size(width, height);
-    int fourcc = CV_FOURCC('m', 'p', '4', 'v');  // .mp4
+    int fourcc = cv::VideoWriter::fourcc('m', 'p', '4', 'v');  // .mp4
     cv::VideoWriter writer(output_file, fourcc, fps, size);
     
     if (!writer.isOpened()) {

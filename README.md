@@ -1,10 +1,13 @@
 # Theta S用のEquirectangular変換(C++)
 
-
 ## 概要
 
 Theta Sで撮影したDual Fisheye画像をVRデバイスで再生できるEquirectangular形式に変換する。
 また、Theta Sカメラが横方向に回転した時に、画像を解析しその回転を除去する。
+
+## 要件
+- Ubuntu 18.04 LTS
+- OpenCV 4
 
 ## 使い方
 
@@ -28,4 +31,3 @@ fps = 29.97
 ## 解説
 
 - リアルタイムで処理ができるように、初めにEquirectangular → Dual Fisheyeの写像行列を作成しておいて、OpenCVのremap()関数を使用することにより高速に変換を行うようにした。
-- Kurento Media Serverのフィルタとして取り込んで動作させるため、OpenCV 2.4を使用している。

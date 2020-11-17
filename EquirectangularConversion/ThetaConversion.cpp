@@ -71,13 +71,13 @@ void ThetaConversion::doConversion(Mat &mat)
 void ThetaConversion::overlaySizeInfo(Mat &mat)
 {
     string s = "Size: " + to_string(cols) + "x" + to_string(rows);
-    putText(mat, s, Point(20, 80), FONT_HERSHEY_SIMPLEX, 0.8, Scalar(20,230,20), 2, CV_AA);
+    putText(mat, s, Point(20, 80), FONT_HERSHEY_SIMPLEX, 0.8, Scalar(20,230,20), 2, LINE_AA);
 }
 
 void ThetaConversion::equirectangularConversion(Mat &mat)
 {
     Mat buf = Mat(mat.size(), mat.type());
-    remap(mat, buf, *map_x, *map_y, CV_INTER_LINEAR, BORDER_CONSTANT, Scalar(0,0,0));
+    remap(mat, buf, *map_x, *map_y, INTER_LINEAR, BORDER_CONSTANT, Scalar(0,0,0));
     buf.copyTo(mat);
 }
 
@@ -103,7 +103,7 @@ int ThetaConversion::diffRotate(Mat& mat)
     Rect r1(0, y1, cols, 1);
     Mat l1(mat, r1);
     Mat m1;
-    cvtColor(l1, m1, CV_RGB2GRAY);
+    cvtColor(l1, m1, COLOR_RGB2GRAY);
     int ret = 0;
 
     if (prev.cols == cols) {
@@ -115,7 +115,7 @@ int ThetaConversion::diffRotate(Mat& mat)
         Mat b1;
         hconcat(prev(rs1), t1, b1);
         Mat result1;
-        matchTemplate(b1, m1, result1, CV_TM_CCOEFF);
+        matchTemplate(b1, m1, result1, TM_CCOEFF);
         Point p1;
         double v1;
         minMaxLoc(result1, NULL, &v1, NULL, &p1);

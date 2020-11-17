@@ -65,7 +65,7 @@ void ThetaConversion::doConversion(Mat &mat)
 {
     equirectangularConversion(mat);
     antiRotate(mat);
-    overlaySizeInfo(mat);
+    // overlaySizeInfo(mat);
 }
 
 void ThetaConversion::overlaySizeInfo(Mat &mat)

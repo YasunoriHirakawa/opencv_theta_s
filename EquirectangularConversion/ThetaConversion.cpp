@@ -16,8 +16,8 @@ ThetaConversion::ThetaConversion(int _w, int _h) : shift(0)
 {
     cols = _w;
     rows = _h;
-    map_x = new Mat(Size(cols, rows), CV_32FC1);
-    map_y = new Mat(Size(cols, rows), CV_32FC1);
+    map_x = Mat(Size(cols, rows), CV_32FC1);
+    map_y = Mat(Size(cols, rows), CV_32FC1);
     makeMap();
 }
 
@@ -49,13 +49,13 @@ void ThetaConversion::makeMap()
             if (ph2 < M_PI / 2) {
                 r0 = ph2 / (M_PI / 2);              // Equidistant projection
                 // r0 = tan(ph2 / 2);               // Stereographic projection
-                map_x->at<float>(y, x) = src_rx * r0 * cos(th2) + src_cx;
-                map_y->at<float>(y, x) = src_ry * r0 * sin(th2) + src_cy;
+                map_x.at<float>(y, x) = src_rx * r0 * cos(th2) + src_cx;
+                map_y.at<float>(y, x) = src_ry * r0 * sin(th2) + src_cy;
             } else {
                 r0 = (M_PI - ph2) / (M_PI / 2);     // Equidistant projection
                 // r0 = tan((M_PI - ph2) / 2);      // Stereographic projection
-                map_x->at<float>(y, x) = src_rx * r0 * cos(M_PI - th2) + src_cx2;
-                map_y->at<float>(y, x) = src_ry * r0 * sin(M_PI - th2) + src_cy;
+                map_x.at<float>(y, x) = src_rx * r0 * cos(M_PI - th2) + src_cx2;
+                map_y.at<float>(y, x) = src_ry * r0 * sin(M_PI - th2) + src_cy;
             }
         }
     }
@@ -77,7 +77,7 @@ void ThetaConversion::overlaySizeInfo(Mat &mat)
 void ThetaConversion::equirectangularConversion(Mat &mat)
 {
     Mat buf = Mat(mat.size(), mat.type());
-    remap(mat, buf, *map_x, *map_y, INTER_LINEAR, BORDER_CONSTANT, Scalar(0,0,0));
+    remap(mat, buf, map_x, map_y, INTER_LINEAR, BORDER_CONSTANT, Scalar(0,0,0));
     buf.copyTo(mat);
 }
 

@@ -26,8 +26,8 @@ private:
     int cols;
     int rows;
     int shift;
-    cv::Mat* map_x;
-    cv::Mat* map_y;
+    cv::Mat map_x;
+    cv::Mat map_y;
     cv::Mat prev;
     int diffRotate(cv::Mat &mat);
 };

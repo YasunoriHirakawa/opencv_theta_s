@@ -31,30 +31,30 @@ void ThetaConversion::makeMap()
     float src_rx = src_r * 1.00;       // 7.11
     float src_ry = src_r * 1.00;       // 7.11
     float src_cx2 = cols - src_cx;
-    
+
     // make mapping table
     for(int y = 0; y < dst_y; y++) {
         for(int x = 0; x < cols; x++) {
             float ph1 = M_PI * x / dst_y;
             float th1 = M_PI * y / dst_y;
-            
+
             float x1 = sin(th1) * cos(ph1);
             float y1 = sin(th1) * sin(ph1);
             float z = cos(th1);
-            
+
             float ph2 = acos(-x1);
             float th2 = (y1 >= 0 ? 1 : -1) * acos(-z / sqrt(y1 * y1 + z * z));
-            
+
             float r0;
             if (ph2 < M_PI / 2) {
                 r0 = ph2 / (M_PI / 2);              // Equidistant projection
                 // r0 = tan(ph2 / 2);               // Stereographic projection
-                map_x.at<float>(y, x) = src_rx * r0 * cos(th2) + src_cx;
+                map_x.at<float>(y, x) = src_rx * r0 * cos(M_PI - th2) + src_cx2;
                 map_y.at<float>(y, x) = src_ry * r0 * sin(th2) + src_cy;
             } else {
                 r0 = (M_PI - ph2) / (M_PI / 2);     // Equidistant projection
                 // r0 = tan((M_PI - ph2) / 2);      // Stereographic projection
-                map_x.at<float>(y, x) = src_rx * r0 * cos(M_PI - th2) + src_cx2;
+                map_x.at<float>(y, x) = src_rx * r0 * cos(th2) + src_cx;
                 map_y.at<float>(y, x) = src_ry * r0 * sin(M_PI - th2) + src_cy;
             }
         }
@@ -85,7 +85,7 @@ void ThetaConversion::antiRotate(Mat &mat)
 {
     shift += diffRotate(mat);
     Mat buf;
-    
+
     if (shift >= cols) shift -= cols;
     if (shift <  0   ) shift += cols;
     if (shift != 0) {

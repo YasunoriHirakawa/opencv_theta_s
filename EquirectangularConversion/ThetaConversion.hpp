@@ -9,20 +9,22 @@
 #ifndef ThetaConversion_hpp
 #define ThetaConversion_hpp
 
-#include "ThetaConversion.hpp"
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
+#include "ThetaConversion.hpp"
+
 class ThetaConversion {
-public:
+ public:
     ThetaConversion(int _w, int _h);
     void makeMap();
     void doConversion(cv::Mat &mat);
     void overlaySizeInfo(cv::Mat &mat);
     void equirectangularConversion(cv::Mat &mat);
     void antiRotate(cv::Mat &mat);
-private:
+
+ private:
     int cols;
     int rows;
     int shift;
@@ -31,6 +33,5 @@ private:
     cv::Mat prev;
     int diffRotate(cv::Mat &mat);
 };
-
 
 #endif /* ThetaConversion_hpp */

@@ -43,14 +43,14 @@ void ThetaConversion::makeMap() {
             float r0;
             if (ph2 < M_PI / 2) {
                 r0 = ph2 / (M_PI / 2);  // Equidistant projection
-                // r0 = tan((M_PI - ph2) / 2);      // Stereographic projection
-                map_x.at<float>(y, x) = src_rx * r0 * cos(th2) + src_cx;
-                map_y.at<float>(y, x) = src_ry * r0 * sin(th2) + src_cy;
+                // r0 = tan(ph2 / 2);               // Stereographic projection
+                map_x.at<float>(y, x - cols/2.0) = src_rx * r0 * cos(th2) + src_cx;
+                map_y.at<float>(y, x - cols/2.0) = src_ry * r0 * sin(th2) + src_cy;
             } else {
                 r0 = (M_PI - ph2) / (M_PI / 2);  // Equidistant projection
-                // r0 = tan(ph2 / 2);               // Stereographic projection
-                map_x.at<float>(y, x) = src_rx * r0 * cos(M_PI - th2) + src_cx2;
-                map_y.at<float>(y, x) = src_ry * r0 * sin(M_PI - th2) + src_cy;
+                // r0 = tan((M_PI - ph2) / 2);      // Stereographic projection
+                map_x.at<float>(y, x + cols/2.0) = src_rx * r0 * cos(M_PI - th2) + src_cx2;
+                map_y.at<float>(y, x + cols/2.0) = src_ry * r0 * sin(M_PI - th2) + src_cy;
             }
         }
     }
